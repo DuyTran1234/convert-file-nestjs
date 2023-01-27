@@ -15,7 +15,7 @@ export class CreateUserValidator implements PipeTransform {
             });
             if (errors.length > 0) {
                 const firstError = await MessageError.getErrorMessage(errors);
-                throw new BadRequestException({ message: `${firstError} (validator)` });
+                throw new BadRequestException(`${firstError} (validator)`);
             }
             return object;
         } catch (error) {

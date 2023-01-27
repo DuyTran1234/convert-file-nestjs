@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Req, Request, UseGuards, UsePipes } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Req, Request, UnauthorizedException, UseGuards, UsePipes } from "@nestjs/common";
 import { plainToInstance } from "class-transformer";
 import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard";
 import { LocalAuthGuard } from "src/auth/guard/local-auth.guard";
@@ -24,7 +24,7 @@ export class UserController {
         try {
             return this.authService.getAccessToken(req.user);
         } catch (error) {
-            throw new BadRequestException(error?.message || `loginUser(UserController) error`);
+            throw new UnauthorizedException(error?.message || `loginUser(UserController) error`);
         }
     }
 

@@ -35,9 +35,9 @@ export class ConvertDocFileService {
                     if (res.statusCode === 200 || res.statusCode === 201) {
                         if (userId.localeCompare(Role.GUEST) === 0) {
                             const deleteFileUpload = await this.localStorageService.deleteFileUpload(pathFileUpload);
-                            console.log(`time uploadFileDocToStorage: $${new Date().getTime() - timer}`);
-                            resolve(fileNameUpload);
                         }
+                        console.log(`time uploadFileDocToStorage: $${new Date().getTime() - timer}`);
+                        resolve(fileNameUpload);
                     }
                     else { reject(new BadRequestException(`uploadFileDocToStorage(ConvertDocFileService) error`)); }
                 });

@@ -44,9 +44,6 @@ export class User {
     address: string;
 
     @Prop()
-    keyProduct: string;
-
-    @Prop()
     avatar: string;
 }
 

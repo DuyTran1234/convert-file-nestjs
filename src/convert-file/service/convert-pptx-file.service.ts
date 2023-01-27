@@ -76,6 +76,7 @@ export class ConvertPptxFileService {
                     res.on('end', async () => {
                         if (res.statusCode === 200) {
                             const saveFilePath = await this.localStorageService.bufferToFile(data, convertFileName, userId);
+                            const deleteFileUpload = await this.localStorageService.deleteFileUpload(pathFileUpload);
                             console.log(`total convertPptxToPdf: ${new Date().getTime() - timer}`);
                             resolve(saveFilePath);
                         }

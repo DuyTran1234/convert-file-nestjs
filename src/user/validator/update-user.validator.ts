@@ -15,12 +15,12 @@ export class UpdateUserValidator implements PipeTransform {
             });
             if (errors.length > 0) {
                 const msgErr = await MessageError.getErrorMessage(errors);
-                throw new BadRequestException({ message: `${msgErr} (validator)` });
-            }
-            return object;
-        } catch (error) {
-            throw new BadRequestException(error?.message || `UpdateUserValidator error`);
+                throw new BadRequestException(`${msgErr} (validator)`);
         }
+            return object;
+    } catch(error) {
+        throw new BadRequestException(error?.message || `UpdateUserValidator error`);
     }
+}
 
 }

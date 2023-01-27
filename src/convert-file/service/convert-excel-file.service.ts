@@ -37,9 +37,9 @@ export class ConvertExcelFileService {
                     if (res.statusCode === 200 || res.statusCode === 201) {
                         if (userId.localeCompare('guest') === 0) {
                             const deleteFileUpload = await this.localStorageService.deleteFileUpload(pathFileUpload);
-                            console.log(`time uploadFileExcelToStorage: ${new Date().getTime() - timer}`);
-                            resolve(fileNameUpload);
                         }
+                        console.log(`time uploadFileExcelToStorage: ${new Date().getTime() - timer}`);
+                        resolve(fileNameUpload);
                     }
                     else { reject(new BadRequestException(`uploadFileExcelToStorage(ConvertExcelFileService) error`)); }
                 });

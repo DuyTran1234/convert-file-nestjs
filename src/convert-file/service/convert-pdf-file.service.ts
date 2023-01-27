@@ -38,9 +38,9 @@ export class ConvertPdfFileService {
                     if (res.statusCode === 200 || res.statusCode === 201) {
                         if (userId.localeCompare(Role.GUEST) === 0) {
                             const deleteFile = await this.localStorageService.deleteFileUpload(pathFileUpload);
-                            console.log(`total time uploadFilePdfToStorage: ${new Date().getTime() - timer}`);
-                            resolve(fileNameUpload);
                         }
+                        console.log(`total time uploadFilePdfToStorage: ${new Date().getTime() - timer}`);
+                        resolve(fileNameUpload);
                     }
                     else { reject(new BadRequestException(`uploadFilePdfToStorage(ConvertPdfFileService) error`)); }
                 });
