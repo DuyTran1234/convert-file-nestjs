@@ -14,6 +14,6 @@ async function bootstrap() {
 		preflightContinue: false,
 		optionsSuccessStatus: 204,
 	});
-	const server = await app.listen(8080);
+	const server = await app.listen(process.env.PORT);
 }
 bootstrap();
