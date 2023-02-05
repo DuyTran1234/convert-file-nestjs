@@ -6,6 +6,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { ExtensionFile } from "src/shared/extension-file.enum";
 import { TimeEnum } from "src/shared/time.enum";
+import { ConvertFileEntity } from "../entity/convert-file.entity";
 import { LocalStorageService } from "./local-storage.service";
 
 dotenv.config();
@@ -53,7 +54,7 @@ export class ConvertExcelFileService {
         }
     }
     public async convertExcelToPdf(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const timer = new Date().getTime();
             const uploadExcelFile = await this.uploadFileExcelToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
@@ -68,7 +69,7 @@ export class ConvertExcelFileService {
                     'authorization': `Bearer ${convertAccessToken}`,
                 }
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => { data.push(chunk); });

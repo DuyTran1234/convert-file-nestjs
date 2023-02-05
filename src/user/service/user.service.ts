@@ -71,7 +71,7 @@ export class UserService {
             if (!updateUser) { throw new BadRequestException(`updateUser(UserService) error`); }
             return updateUser;
         } catch (error) {
-            throw new NotFoundException(error?.message || `updateUser(UserService) error`);
+            throw new BadRequestException(error?.message || `updateUser(UserService) error`);
         }
     }
 

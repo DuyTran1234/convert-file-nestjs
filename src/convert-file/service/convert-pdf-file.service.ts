@@ -6,6 +6,7 @@ import * as path from 'node:path';
 import { ExtensionFile } from "src/shared/extension-file.enum";
 import { Role } from "src/shared/role.enum";
 import { TimeEnum } from "src/shared/time.enum";
+import { ConvertFileEntity } from "../entity/convert-file.entity";
 import { LocalStorageService } from "./local-storage.service";
 
 const TIMEOUT_REQUEST = TimeEnum.TIMEOUT_REQUEST;
@@ -56,7 +57,7 @@ export class ConvertPdfFileService {
         }
     }
     public async convertPdfToDoc(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const timer = new Date().getTime();
             const uploadFile = await this.uploadFilePdfToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
@@ -72,7 +73,7 @@ export class ConvertPdfFileService {
                     'Authorization': `Bearer ${convertAccessToken}`,
                 },
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => {
@@ -100,7 +101,7 @@ export class ConvertPdfFileService {
         }
     }
     public async convertPdfToExcel(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const uploadFile = await this.uploadFilePdfToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
             const timer = new Date().getTime();
@@ -116,7 +117,7 @@ export class ConvertPdfFileService {
                     'Authorization': `Bearer ${convertAccessToken}`,
                 },
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => { data.push(chunk); });
@@ -141,7 +142,7 @@ export class ConvertPdfFileService {
         }
     }
     public async convertPdfToPptx(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const uploadFileStorage = await this.uploadFilePdfToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
             const timer = new Date().getTime();
@@ -157,7 +158,7 @@ export class ConvertPdfFileService {
                     'Authorization': `Bearer ${convertAccessToken}`,
                 },
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => { data.push(chunk); });
@@ -180,7 +181,7 @@ export class ConvertPdfFileService {
         }
     }
     public async convertPdfToEpub(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const uploadFileStorage = await this.uploadFilePdfToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
             const timer = new Date().getTime();
@@ -196,7 +197,7 @@ export class ConvertPdfFileService {
                     'Authorization': `Bearer ${convertAccessToken}`,
                 },
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => { data.push(chunk); });

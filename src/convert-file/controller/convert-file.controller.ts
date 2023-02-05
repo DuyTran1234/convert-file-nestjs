@@ -1,10 +1,13 @@
-import { BadRequestException, Body, Controller, Post, Request, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, Param, Post, Request, Res, UploadedFiles, UseGuards, UseInterceptors, UsePipes } from "@nestjs/common";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard";
 import { ConvertTypeValidator } from "src/convert-file/validator/convert-type.validator";
 import { SizeEnum } from "src/shared/size.enum";
 import { ConvertTypeDto } from "../dto/convert-type.dto";
 import { ConvertFileService } from "../service/convert-file.service";
+import * as path from 'node:path';
+import { LOCAL_STORAGE_CONVERT_FILE } from "src/shared/local-storage.const";
+import * as fs from 'node:fs';
 
 @Controller('convert-file')
 export class ConvertFileController {
@@ -43,12 +46,19 @@ export class ConvertFileController {
         @Body() convertTypeDto: ConvertTypeDto, @Request() req: any) {
         try {
             const userId = req.user?._id || 'guest';
-            console.log(userId);
             const convertFile = await this.convertFileService.convertFile(files, convertTypeDto, userId);
             return convertFile;
         } catch (error) {
-            if (error) { throw error; }
             throw new BadRequestException(error?.message || `guestConvertFile ConvertFileController error`);
         }
+    }
+
+    @Get('convert-download/:userId/:convertFileName')
+    async userDownloadConvertFile(@Param() params: any, @Res() res: any) {
+        const userId = params?.userId;
+        const fileName = params?.convertFileName;
+        const pathFileConvertFull = path.join(LOCAL_STORAGE_CONVERT_FILE, userId, fileName);
+        const file = fs.createReadStream(pathFileConvertFull);
+        file.pipe(res);
     }
 }

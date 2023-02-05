@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { LOCAL_STORAGE_CONVERT_FILE } from "src/shared/local-storage.const";
+import { ConvertFileEntity } from "../entity/convert-file.entity";
 
 @Injectable()
 export class LocalStorageService {
@@ -20,7 +21,7 @@ export class LocalStorageService {
             throw new BadRequestException(error?.message || 'createLocalStorage(ConvertFileService) error');
         }
     }
-    public async bufferToFile(data: any[], convertFileName: string, userId: string): Promise<string> {
+    public async bufferToFile(data: any[], convertFileName: string, userId: string): Promise<ConvertFileEntity> {
         try {
             const timer = new Date().getTime();
             const userLocalStorageConvertFile = await this.createLocalStorageConvertFile(userId);
@@ -31,8 +32,10 @@ export class LocalStorageService {
                     flag: 'a'
                 });
             });
-            console.log(`time write file from buffer: ${new Date().getTime() - timer}`);
-            return saveFilePath;
+            return {
+                userId: userId,
+                convertFileName: convertFileName,
+            };
         } catch (error) {
             throw new BadRequestException(error?.message || `bufferToFile(ConvertFileService) error`);
         }

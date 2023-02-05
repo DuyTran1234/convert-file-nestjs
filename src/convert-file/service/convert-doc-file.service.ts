@@ -6,6 +6,7 @@ import * as path from 'node:path';
 import { ExtensionFile } from "src/shared/extension-file.enum";
 import { Role } from "src/shared/role.enum";
 import { TimeEnum } from "src/shared/time.enum";
+import { ConvertFileEntity } from "../entity/convert-file.entity";
 import { LocalStorageService } from "./local-storage.service";
 
 @Injectable()
@@ -51,7 +52,7 @@ export class ConvertDocFileService {
         }
     }
     public async convertDocToPdf(pathFileUpload: string, fileNameUpload: string,
-        userId: string, convertAccessToken: string): Promise<string> {
+        userId: string, convertAccessToken: string): Promise<ConvertFileEntity> {
         try {
             const timer = new Date().getTime();
             const uploadFileStorage = await this.uploadFileDocToStorage(pathFileUpload, fileNameUpload, userId, convertAccessToken);
@@ -66,7 +67,7 @@ export class ConvertDocFileService {
                     'Authorization': `Bearer ${convertAccessToken}`
                 },
             };
-            const promise = new Promise<string>((resolve, reject) => {
+            const promise = new Promise<ConvertFileEntity>((resolve, reject) => {
                 const request = https.request(options, (res) => {
                     let data = [];
                     res.on('data', (chunk) => {
