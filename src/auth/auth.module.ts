@@ -15,7 +15,7 @@ dotenv.config();
         JwtModule.register({
             secret: process.env.SECRET_KEY,
             signOptions: {
-                expiresIn: 604800, // 7 days
+                expiresIn: "30d", // 30 days
             }
         }),
     ],
